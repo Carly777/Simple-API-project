@@ -1,0 +1,20 @@
+import csv
+import pandas as pd
+import requests
+from pprint import pprint
+
+ingredients = input("What ingredients do you like? ")
+
+url = 'https://api.edamam.com/search?q={}&app_id=ca629fd8&app_key=9564ceac2e4578b275a9324e4b922546'.format(ingredients)
+response = requests.get(url)
+print(response)
+recipes = response.json()
+pprint(recipes)
+
+type(recipes)
+
+ingredients_list = recipes['hits'][0]['recipe']['ingredients']
+pprint(ingredients_list)
+
+pd.DataFrame(ingredients_list).to_csv("apple_recipe.csv",index=0)
+
